@@ -26,6 +26,8 @@ A API sobe por padrão em:
 http://localhost:8085
 ```
 
+Em Cloud Run, a aplicação usa automaticamente a variável `PORT` injetada pela plataforma, normalmente `8080`. Não configure `SERVER_PORT` no Cloud Run a menos que você também altere a porta do container no serviço.
+
 Swagger:
 
 ```text
@@ -43,7 +45,7 @@ http://localhost:8085/health
 Use `.env.example` como base. As principais são:
 
 ```env
-SERVER_PORT=
+SERVER_PORT=8085
 
 POSTGRES_HOST=
 POSTGRES_PORT=
@@ -109,6 +111,12 @@ Execução local usando variáveis do `.env`:
 docker run --rm --env-file .env -p 8085:8085 go-adega-service
 ```
 
+Simulando Cloud Run localmente:
+
+```bash
+docker run --rm --env-file .env -e PORT=8080 -p 8080:8080 go-adega-service
+```
+
 Se usar upload para GCP localmente, monte o JSON da service account e aponte `GOOGLE_APPLICATION_CREDENTIALS` para o caminho dentro do container:
 
 ```bash
@@ -141,6 +149,6 @@ go test ./...
 
 ## Observações
 
-- Para upload funcionar, configure `GCS_BUCKET`, `GCS_PUBLIC_BASE_URL` e `GOOGLE_APPLICATION_CREDENTIALS`.
+- Para upload funcionar localmente, configure `GCS_BUCKET`, `GCS_PUBLIC_BASE_URL` e `GOOGLE_APPLICATION_CREDENTIALS`. No GCP, prefira a service account do próprio serviço.
 - Para pagamentos online, o `go-payment-service` precisa estar rodando e `PAYMENT_SERVICE_URL` deve apontar para ele.
 - Para envio de e-mail de motoboy, configure as variáveis do SendGrid.

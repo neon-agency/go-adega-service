@@ -19,6 +19,6 @@ RUN apk add --no-cache ca-certificates tzdata
 COPY --from=builder /go-adega-service /app/go-adega-service
 COPY db/migration /app/db/migration
 
-EXPOSE 8085
+EXPOSE 8080
 
 CMD ["/app/go-adega-service"]

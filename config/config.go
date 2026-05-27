@@ -28,7 +28,7 @@ type Config struct {
 
 func Load() Config {
 	return Config{
-		ServerPort:        env("SERVER_PORT", "8085"),
+		ServerPort:        env("PORT", env("SERVER_PORT", "8085")),
 		DBHost:            env("POSTGRES_HOST", "localhost"),
 		DBPort:            env("POSTGRES_PORT", "5432"),
 		DBUser:            env("POSTGRES_USER", "postgres"),
