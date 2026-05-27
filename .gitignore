@@ -1,0 +1,39 @@
+# Binaries and build output
+bin/
+dist/
+build/
+*.exe
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Go workspace/cache artifacts
+coverage/
+coverage.out
+*.coverprofile
+
+# Local environment
+.env
+.env.*
+!.env.example
+
+# Credentials and secrets
+gcp-service-account.json
+*-service-account.json
+service-account*.json
+credentials*.json
+
+# Logs and temporary files
+*.log
+tmp/
+temp/
+.cache/
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json

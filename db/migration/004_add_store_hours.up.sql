@@ -1,0 +1,4 @@
+ALTER TABLE store_settings
+ADD COLUMN opening_time TIME NOT NULL DEFAULT '09:00',
+ADD COLUMN closing_time TIME NOT NULL DEFAULT '22:00';
+
