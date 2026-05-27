@@ -77,9 +77,9 @@ As migrations ficam em:
 db/migration
 ```
 
-O backend não executa migrations automaticamente ao iniciar. Antes de rodar uma versão nova, aplique as migrations no banco configurado no `.env`.
+O backend executa as migrations automaticamente ao iniciar, usando `file://db/migration`. Por isso, ao rodar via Docker, a imagem precisa incluir a pasta `db/migration`.
 
-Exemplo usando `psql`:
+Se precisar aplicar uma migration manualmente para debug, use `psql`:
 
 ```bash
 set -a
@@ -93,6 +93,30 @@ PGPASSWORD="$POSTGRES_PASSWORD" psql \
   -d "$POSTGRES_DB" \
   -v ON_ERROR_STOP=1 \
   -f db/migration/010_complete_store_settings.up.sql
+```
+
+## Docker
+
+Build da imagem:
+
+```bash
+docker build -t go-adega-service .
+```
+
+Execução local usando variáveis do `.env`:
+
+```bash
+docker run --rm --env-file .env -p 8085:8085 go-adega-service
+```
+
+Se usar upload para GCP localmente, monte o JSON da service account e aponte `GOOGLE_APPLICATION_CREDENTIALS` para o caminho dentro do container:
+
+```bash
+docker run --rm --env-file .env \
+  -e GOOGLE_APPLICATION_CREDENTIALS=/secrets/gcp-service-account.json \
+  -v "$PWD/gcp-service-account.json:/secrets/gcp-service-account.json:ro" \
+  -p 8085:8085 \
+  go-adega-service
 ```
 
 ## Principais rotas
